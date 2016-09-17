@@ -70,6 +70,7 @@ test0 = SConscript('test0/SConscript', \
 images = [mm0, rootfs, test0]
 bootdesc_env = env.Clone()
 bootdesc_env['bootdesc_dir'] = 'bootdesc'
+bootdesc_env.Replace(LIBS = ['libl4', 'libdev-userspace', 'gcc', 'libmem'])
 
 bootdesc = SConscript('bootdesc/SConscript', \
                       exports = { 'config' : config,  'environment' : bootdesc_env, \
