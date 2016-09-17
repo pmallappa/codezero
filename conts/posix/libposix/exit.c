@@ -8,7 +8,7 @@
 
 static inline void __attribute__ ((noreturn)) l4_exit_ipc(int status)
 {
-	int ret;
+	int ret = 0;
 
 	write_mr(L4SYS_ARG0, status);
 
@@ -17,6 +17,9 @@ static inline void __attribute__ ((noreturn)) l4_exit_ipc(int status)
 
 	/* This call should not fail or return */
 	print_err("%s: L4 IPC returned: %d.\n", __FUNCTION__, ret);
+	if (ret)
+		BUG();
+
 	BUG();
 }
 
