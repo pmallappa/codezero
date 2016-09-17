@@ -217,6 +217,8 @@ int set_page_map(struct page_bitmap *page_map,
 	return 0;
 
 error:
+	BUG_MSG("Requested pfn_start%lx num_pages:%d val:%d \n",
+		pfn_start, numpages, val);
 	BUG_MSG("Given page area is out of system page_map range: 0x%lx\n",
 		pfn_err << PAGE_BITS);
 	return -1;
@@ -392,7 +394,7 @@ void copy_init_process(void)
 	int fd;
 	struct svc_image *init_img;
 	unsigned long img_size;
-	void *init_img_start, *init_img_end;
+	void *init_img_start; //, *init_img_end;
 	struct tcb *self = find_task(self_tid());
 	void *mapped;
 	int err;
@@ -415,7 +417,7 @@ void copy_init_process(void)
 
 	init_img_start = l4_map_helper((void *)init_img->phys_start,
 				       __pfn(img_size));
-	init_img_end = init_img_start + img_size;
+	//init_img_end = init_img_start + img_size;
 
 	/*
 	 * Map an anonymous region and prefault it.
