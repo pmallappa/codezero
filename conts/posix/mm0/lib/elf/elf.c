@@ -126,7 +126,7 @@ int elf_parse_executable(struct tcb *task, struct vm_file *file,
 			 struct exec_file_desc *efd)
 {
 	struct elf_header elf_header, *elf_headerp = pager_map_page(file, 0);
-	struct elf_program_header *prg_header_start, *prg_header_load;
+	struct elf_program_header *prg_header_start; //, *prg_header_load;
 	struct elf_section_header *sect_header;
 	unsigned long sect_offset, sect_size;
 	unsigned long prg_offset, prg_size;
@@ -154,7 +154,7 @@ int elf_parse_executable(struct tcb *task, struct vm_file *file,
 	/* Get the first loadable segment. We currently just stare at it */
 	for (int i = 0; i < elf_header.e_phnum; i++) {
 		if (prg_header_start[i].p_type == PT_LOAD) {
-			prg_header_load = &prg_header_start[i];
+			//prg_header_load = &prg_header_start[i];
 			break;
 		}
 	}
